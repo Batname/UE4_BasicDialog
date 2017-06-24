@@ -8844,6 +8844,7 @@ HEADERS += \
 	"$$BasicDialogRootPath/Source/BasicDialog/BasicDialogCharacter.h" \
 	"$$BasicDialogRootPath/Source/BasicDialog/BasicDialogGameMode.h" \
 	"$$BasicDialogRootPath/Source/BasicDialog/Dialog.h" \
+	"$$BasicDialogRootPath/Source/BasicDialog/DialogUI.h" \
 	"$$BasicDialogRootPath/Source/BasicDialog/Subtitle.h" \
  
 

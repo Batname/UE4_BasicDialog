@@ -6831,6 +6831,7 @@ SOURCES += \
 	"$$BasicDialogRootPath/Source/BasicDialog/BasicDialogCharacter.cpp" \
 	"$$BasicDialogRootPath/Source/BasicDialog/BasicDialogGameMode.cpp" \
 	"$$BasicDialogRootPath/Source/BasicDialog/Dialog.cpp" \
+	"$$BasicDialogRootPath/Source/BasicDialog/DialogUI.cpp" \
 	"$$BasicDialogRootPath/Source/BasicDialog/Subtitle.cpp" \
  
 

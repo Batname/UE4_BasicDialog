@@ -6842,6 +6842,7 @@ set(SOURCE_FILES
 	"${GAME_ROOT_PATH}/Source/BasicDialog/BasicDialogCharacter.cpp"
 	"${GAME_ROOT_PATH}/Source/BasicDialog/BasicDialogGameMode.cpp"
 	"${GAME_ROOT_PATH}/Source/BasicDialog/Dialog.cpp"
+	"${GAME_ROOT_PATH}/Source/BasicDialog/DialogUI.cpp"
 	"${GAME_ROOT_PATH}/Source/BasicDialog/Subtitle.cpp"
  )
 
@@ -15691,6 +15692,7 @@ set(HEADER_FILES
 	"${GAME_ROOT_PATH}/Source/BasicDialog/BasicDialogCharacter.h"
 	"${GAME_ROOT_PATH}/Source/BasicDialog/BasicDialogGameMode.h"
 	"${GAME_ROOT_PATH}/Source/BasicDialog/Dialog.h"
+	"${GAME_ROOT_PATH}/Source/BasicDialog/DialogUI.h"
 	"${GAME_ROOT_PATH}/Source/BasicDialog/Subtitle.h"
  )
 
@@ -20136,6 +20138,25 @@ include_directories(
 	"${UE4_ROOT_PATH}/Engine/Source/Runtime/AudioMixer/Public/DSP"
 	"${UE4_ROOT_PATH}/Engine/Intermediate/Build/Linux/B4D820EA/UE4Editor/Inc/AudioMixer"
 	"${UE4_ROOT_PATH}/Engine/Source/Runtime/AudioMixer"
+	"${UE4_ROOT_PATH}/Engine/Source/Runtime/UMG/Public"
+	"${UE4_ROOT_PATH}/Engine/Source/Runtime/UMG/Public/Animation"
+	"${UE4_ROOT_PATH}/Engine/Source/Runtime/UMG/Public/Binding"
+	"${UE4_ROOT_PATH}/Engine/Source/Runtime/UMG/Public/Blueprint"
+	"${UE4_ROOT_PATH}/Engine/Source/Runtime/UMG/Public/Components"
+	"${UE4_ROOT_PATH}/Engine/Source/Runtime/UMG/Public/Slate"
+	"${UE4_ROOT_PATH}/Engine/Intermediate/Build/Linux/B4D820EA/UE4Editor/Inc/UMG"
+	"${UE4_ROOT_PATH}/Engine/Source/Runtime/UMG"
+	"${UE4_ROOT_PATH}/Engine/Source/Runtime/MovieScene/Public"
+	"${UE4_ROOT_PATH}/Engine/Source/Runtime/MovieScene/Public/Compilation"
+	"${UE4_ROOT_PATH}/Engine/Source/Runtime/MovieScene/Public/Evaluation"
+	"${UE4_ROOT_PATH}/Engine/Intermediate/Build/Linux/B4D820EA/UE4Editor/Inc/MovieScene"
+	"${UE4_ROOT_PATH}/Engine/Source/Runtime/MovieScene"
+	"${UE4_ROOT_PATH}/Engine/Source/Runtime/MovieSceneTracks/Public"
+	"${UE4_ROOT_PATH}/Engine/Source/Runtime/MovieSceneTracks/Public/Evaluation"
+	"${UE4_ROOT_PATH}/Engine/Source/Runtime/MovieSceneTracks/Public/Sections"
+	"${UE4_ROOT_PATH}/Engine/Source/Runtime/MovieSceneTracks/Public/Tracks"
+	"${UE4_ROOT_PATH}/Engine/Intermediate/Build/Linux/B4D820EA/UE4Editor/Inc/MovieSceneTracks"
+	"${UE4_ROOT_PATH}/Engine/Source/Runtime/MovieSceneTracks"
  )
 
 add_definitions( 
