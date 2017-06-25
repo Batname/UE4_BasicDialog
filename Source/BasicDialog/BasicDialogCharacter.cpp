@@ -118,7 +118,7 @@ void ABasicDialogCharacter::LookUpAtRate(float Rate)
 
 void ABasicDialogCharacter::MoveForward(float Value)
 {
-	if ((Controller != NULL) && (Value != 0.0f))
+	if ((Controller != NULL) && (Value != 0.0f) && !bIsTalking)
 	{
 		// find out which way is forward
 		const FRotator Rotation = Controller->GetControlRotation();
@@ -132,7 +132,7 @@ void ABasicDialogCharacter::MoveForward(float Value)
 
 void ABasicDialogCharacter::MoveRight(float Value)
 {
-	if ( (Controller != NULL) && (Value != 0.0f) )
+	if ( (Controller != NULL) && (Value != 0.0f) && !bIsTalking)
 	{
 		// find out which way is right
 		const FRotator Rotation = Controller->GetControlRotation();
@@ -144,7 +144,19 @@ void ABasicDialogCharacter::MoveRight(float Value)
 		AddMovementInput(Direction, Value);
 	}
 }
+
 void ABasicDialogCharacter::ToogleTalking()
 {
-	
+	if (bIsInTalkRange)
+	{
+		bIsTalking = !bIsTalking;
+		ToggleUI();
+		if (bIsTalking && AssociatedPawn)
+		{
+			FVector Location = AssociatedPawn->GetActorLocation();
+			FVector TargetLocation = GetActorLocation(); // My character location
+
+			AssociatedPawn->SetActorRotation((TargetLocation - Location).Rotation());
+		}
+	}
 }
