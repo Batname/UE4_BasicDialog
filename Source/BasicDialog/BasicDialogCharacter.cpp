@@ -154,6 +154,9 @@ void ABasicDialogCharacter::ToggleTalking()
 		ToggleUI();
 		if (bIsTalking && AssociatedPawn)
 		{
+
+			UE_LOG(LogTemp, Warning, TEXT("bIsTalking %d, AssociatedPawn %p, MyCharacter %p"), bIsTalking, AssociatedPawn, this);
+
 			//It is more polite to face the person you talk to!
 			FVector Location = AssociatedPawn->GetActorLocation();
 			FVector TargetLocation = GetActorLocation();
