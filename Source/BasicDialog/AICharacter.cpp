@@ -3,8 +3,10 @@
 
 #include "AICharacter.h"
 
+#include "BasicDialogCharacter.h"
 #include "Components/BoxComponent.h"
 #include "Components/AudioComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 AAICharacter::AAICharacter()
@@ -47,16 +49,53 @@ void AAICharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 
 void AAICharacter::OnBoxOverlap(class UPrimitiveComponent* HitComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
-
+	if (OtherActor->IsA<ABasicDialogCharacter>())
+	{
+		ABasicDialogCharacter* Char = Cast<ABasicDialogCharacter>(OtherActor);
+		Char->SetTalkRangeStatus(true);
+		Char->GeneratePlayerLines(*PlayerLines);
+		Char->SetAssociatedPawn(this);
+	}
 }
 
 
 void AAICharacter::OnBoxEndOverlap(class UPrimitiveComponent* HitComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
-	
+	if (OtherActor->IsA<ABasicDialogCharacter>())
+	{
+		ABasicDialogCharacter* Char = Cast<ABasicDialogCharacter>(OtherActor);
+		Char->SetTalkRangeStatus(false);
+		Char->SetAssociatedPawn(nullptr);
+	}
 }
+
+void AAICharacter::Talk(USoundBase* SFX, TArray<FSubtitle> Subs)
+{
+	ABasicDialogCharacter* Char = Cast<ABasicDialogCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+
+	AudioComp->SetSound(SFX);
+	AudioComp->Play();
+
+	Char->GetUI()->UpdateSubtitles(Subs);
+}
+
 
 void AAICharacter::AnswerToCharacter(FName PlayerLine, TArray<FSubtitle>& SubtitleToDisplay, float delay)
 {
-	// TODO implement it
+	if (!AILines) return;
+
+	FString ContextString;
+	FDialog* Dialog = AILines->FindRow<FDialog>(PlayerLine, ContextString);
+
+	ABasicDialogCharacter* MainChar = Cast<ABasicDialogCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+
+	if (Dialog && MainChar)
+	{
+		FTimerHandle TimerHandle;
+		FTimerDelegate TimerDel;
+
+		TimerDel.BindUFunction(this, FName("Talk"), Dialog->SFX, Dialog->Subtitles);
+
+		GetWorld()->GetTimerManager().SetTimer(TimerHandle, TimerDel, delay, false);
+	}	
 }
