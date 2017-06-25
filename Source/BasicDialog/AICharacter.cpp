@@ -55,3 +55,8 @@ void AAICharacter::OnBoxEndOverlap(class UPrimitiveComponent* HitComp, class AAc
 {
 	
 }
+
+void AAICharacter::AnswerToCharacter(FName PlayerLine, TArray<FSubtitle>& SubtitleToDisplay, float delay)
+{
+	// TODO implement it
+}

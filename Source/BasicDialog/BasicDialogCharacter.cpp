@@ -188,3 +188,39 @@ FDialog* ABasicDialogCharacter::RetriveDialog(UDataTable* TableToSearch, FName R
 	FString ContectString;
 	return TableToSearch->FindRow<FDialog>(RowName, ContectString);
 }
+
+void ABasicDialogCharacter::Talk(FString Excerpt, TArray<FSubtitle>& Subtitles)
+{
+	TArray<FName> PlayerOptions = AvailableLines->GetRowNames();
+
+	for (auto It : PlayerOptions)
+	{
+		FDialog* Dialog = RetriveDialog(AvailableLines, It);
+
+		if (Dialog && Dialog->QuestionExcerpt == Excerpt)
+		{
+			AudioComp->SetSound(Dialog->SFX);
+			AudioComp->Play();
+
+			Subtitles = Dialog->Subtitles;
+
+			if (UI && AssociatedPawn && Dialog->bShouldAIAnswer)
+			{
+				TArray<FSubtitle> SubtitlesToDisplay;
+
+				float TotalSubsTime = 0.0f;
+
+				for (int32 i = 0; i < Subtitles.Num(); i++)
+				{
+					TotalSubsTime += Subtitles[i].AssociatedTime;
+				}
+
+				TotalSubsTime += 1.f;
+
+				AssociatedPawn->AnswerToCharacter(It, SubtitlesToDisplay, TotalSubsTime);
+			}
+			else if (!Dialog->bShouldAIAnswer) ToogleTalking();
+			break;
+		}
+	}
+}
