@@ -33,19 +33,6 @@ void AAICharacter::BeginPlay()
 	
 }
 
-// Called every frame
-void AAICharacter::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-}
-
-// Called to bind functionality to input
-void AAICharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
-}
 
 void AAICharacter::OnBoxOverlap(class UPrimitiveComponent* HitComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
@@ -72,10 +59,12 @@ void AAICharacter::OnBoxEndOverlap(class UPrimitiveComponent* HitComp, class AAc
 void AAICharacter::Talk(USoundBase* SFX, TArray<FSubtitle> Subs)
 {
 	ABasicDialogCharacter* Char = Cast<ABasicDialogCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
-
+	
+	//Play the corresponding sfx
 	AudioComp->SetSound(SFX);
 	AudioComp->Play();
 
+	//Tell the UI to update with the new subtitles
 	Char->GetUI()->UpdateSubtitles(Subs);
 }
 
@@ -84,6 +73,7 @@ void AAICharacter::AnswerToCharacter(FName PlayerLine, TArray<FSubtitle>& Subtit
 {
 	if (!AILines) return;
 
+	//Retrieve the corresponding line
 	FString ContextString;
 	FDialog* Dialog = AILines->FindRow<FDialog>(PlayerLine, ContextString);
 
@@ -96,6 +86,7 @@ void AAICharacter::AnswerToCharacter(FName PlayerLine, TArray<FSubtitle>& Subtit
 
 		TimerDel.BindUFunction(this, FName("Talk"), Dialog->SFX, Dialog->Subtitles);
 
+		//Talk to the player after the delay time has passed
 		GetWorld()->GetTimerManager().SetTimer(TimerHandle, TimerDel, delay, false);
-	}	
+	}
 }
