@@ -75,42 +75,56 @@ public:
 
 /* ----- Dialog system logic ----- */
 private:
+	/*True if the player is currently talking with any pawn*/
 	bool bIsTalking;
 
+	/*True if the player is inside a valid range to start talking to a pawn*/
 	bool bIsInTalkRange;
 
-	void ToogleTalking();
+	/*Initiates or terminates a conversation*/
+	void ToggleTalking();
 
-	/** The pawn that the player is currently talking to */
+	/*The pawn that the player is currently talking to*/
 	AAICharacter* AssociatedPawn;
 
-	/** Reffer to lines */
+	/*A reference to our lines - retrieved from the associated pawn*/
 	UDataTable* AvailableLines;
 
-	FDialog* RetriveDialog(UDataTable* TableToSearch, FName RowName);
+	/*Searches in the given row inside the specified table*/
+	FDialog* RetrieveDialog(UDataTable* TableToSearch, FName RowName);
 
 public:
+	/*Generates the player lines*/
 	void GeneratePlayerLines(UDataTable& PlayerLines);
 
+	/*This array is essentially an Array of Excerpts from our dialogs!*/
 	UPROPERTY(BlueprintReadOnly)
 	TArray<FString> Questions;
 
+	/*Performs the actual talking - informs the associated pawn if necessary in order to answer
+	The subtitles array contain all the subtitles for this talk - it should be passed to our UI*/
 	UFUNCTION(BlueprintCallable, Category = DialogSystem)
 	void Talk(FString Excerpt, TArray<FSubtitle>& Subtitles);
 
+	/*Enables / disables our talk ability. The player can't talk if he's not in a valid range*/
 	void SetTalkRangeStatus(bool Status) { bIsInTalkRange = Status; }
 
+	/*Sets a new associated pawn*/
 	void SetAssociatedPawn(AAICharacter* Pawn) { AssociatedPawn = Pawn; }
 
+	/*Retrieves the UI reference*/
 	UDialogUI* GetUI() { return UI; }
 
 protected:
+	/*The component responsible for playing our SFX*/
 	UPROPERTY(VisibleAnywhere)
 	UAudioComponent* AudioComp;
 
+	/*Opens or closes the conversation UI*/
 	UFUNCTION(BlueprintImplementableEvent, Category = DialogSystem)
 	void ToggleUI();
 
+	/*UI Reference*/
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	UDialogUI* UI;
 
