@@ -160,3 +160,31 @@ void ABasicDialogCharacter::ToogleTalking()
 		}
 	}
 }
+
+void ABasicDialogCharacter::GeneratePlayerLines(UDataTable& PlayerLines)
+{
+	TArray<FName> PlayerOptions = PlayerLines.GetRowNames();
+
+	for (auto It : PlayerOptions)
+	{
+		FDialog* Dialog = RetriveDialog(&PlayerLines, It);
+
+		if (Dialog)
+		{
+			Questions.Add(Dialog->QuestionExcerpt);
+		}
+	}
+
+	AvailableLines = &PlayerLines;
+}
+
+FDialog* ABasicDialogCharacter::RetriveDialog(UDataTable* TableToSearch, FName RowName)
+{
+	if (!TableToSearch)
+	{
+		return nullptr;
+	}
+
+	FString ContectString;
+	return TableToSearch->FindRow<FDialog>(RowName, ContectString);
+}

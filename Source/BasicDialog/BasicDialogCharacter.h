@@ -87,7 +87,7 @@ private:
 	/** Reffer to lines */
 	UDataTable* AvailableLines;
 
-	FDialog* RetriveDialog(UDataTable* TableToSearch, FName RawName);
+	FDialog* RetriveDialog(UDataTable* TableToSearch, FName RowName);
 
 public:
 	void GeneratePlayerLines(UDataTable& PlayerLines);
