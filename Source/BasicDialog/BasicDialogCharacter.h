@@ -4,6 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+
+#include "AICharacter.h"
+#include "DialogUI.h"
+
 #include "BasicDialogCharacter.generated.h"
 
 UCLASS(config=Game)
@@ -68,5 +72,48 @@ public:
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
+
+/* ----- Dialog system logic ----- */
+private:
+	bool bIsTalking;
+
+	bool bIsInTalkRange;
+
+	void ToogleTalking();
+
+	/** The pawn that the player is currently talking to */
+	AAICharacter* AssociatedPawn;
+
+	/** Reffer to lines */
+	UDataTable* AvailableLines;
+
+	FDialog* RetriveDialog(UDataTable* TableToSearch, FName RawName);
+
+public:
+	void GeneratePlayerLines(UDataTable& PlayerLines);
+
+	UPROPERTY(BlueprintReadOnly)
+	TArray<FString> Questions;
+
+	UFUNCTION(BlueprintCallable, Category = DialogSystem)
+	void Talk(FString Excerpt, TArray<FSubtitle>& Subtitles);
+
+	void SetTalkRangeStatus(bool Status) { bIsInTalkRange = Status; }
+
+	void SetAssociatedPawn(AAICharacter* Pawn) { AssociatedPawn = Pawn; }
+
+	UDialogUI* GetUI() { return UI; }
+
+protected:
+	UPROPERTY(VisibleAnywhere)
+	UAudioComponent* AudioComp;
+
+	UFUNCTION(BlueprintImplementableEvent, Category = DialogSystem)
+	void ToggleUI();
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	UDialogUI* UI;
+
+/* ----- Dialog system logic ----- */
 };
 
