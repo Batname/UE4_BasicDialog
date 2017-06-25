@@ -16,8 +16,10 @@ class BASICDIALOG_API UDialogUI : public UUserWidget
 	GENERATED_BODY()
 	
 public:
+
 	UPROPERTY(BlueprintReadOnly)
 	FString SubtitleToDisplay;
+
 
 	UFUNCTION(BlueprintCallable, Category = DialogSystem)
 	void UpdateSubtitles(TArray<FSubtitle> Subtitles);

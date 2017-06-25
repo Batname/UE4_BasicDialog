@@ -30,7 +30,6 @@ struct FDialog : public FTableRowBase
 	UPROPERTY(EditAnywhere)
 	TArray<FSubtitle> Subtitles;
 
-
 	UPROPERTY(EditAnywhere)
 	bool bShouldAIAnswer;
 };
