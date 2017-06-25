@@ -83,6 +83,9 @@ void ABasicDialogCharacter::SetupPlayerInputComponent(class UInputComponent* Pla
 
 	// VR headset functionality
 	PlayerInputComponent->BindAction("ResetVR", IE_Pressed, this, &ABasicDialogCharacter::OnResetVR);
+
+	/* ----- Dialog system logic ----- */
+	PlayerInputComponent->BindAction("Talk", IE_Pressed, this, &ABasicDialogCharacter::ToogleTalking);
 }
 
 
@@ -140,4 +143,8 @@ void ABasicDialogCharacter::MoveRight(float Value)
 		// add movement in that direction
 		AddMovementInput(Direction, Value);
 	}
+}
+void ABasicDialogCharacter::ToogleTalking()
+{
+	
 }
